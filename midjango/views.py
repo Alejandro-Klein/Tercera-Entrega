@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
+from inicio.models import Alumno
 
 # V1
 # def inicio(request):
@@ -30,7 +31,7 @@ from django.template import Template, Context, loader
 
 #v1
 def inicio(request):
-   #no me conviene tener esta direccion por el que se baje el mismo capas no la tenga
+   #no me conviene tener esta direccion larga por el que se baje el mismo capas no la tenga
    template = loader.get_template("inicio.html") # carga el tamplate
    segundos = datetime.now().second
    diccionario = {
@@ -58,4 +59,14 @@ def saludar(request):
 def bienvenida(request,nombre):
     return HttpResponse(f"BIENVENIDO/A  {nombre.title()}!!!") # con esto le paso lo que escriba en la url como nombre.Pueden ser mas.
 
+def crear_alumno(request,nombre,curso):
+   template = loader.get_template("crear_alumno.html") # carga el tamplate
+   alumno = Alumno(nombre=nombre,curso=curso)
+   alumno.save() # para guardar en BD.
+   diccionario = {
+      "alumno": alumno,
+   }
+   renderizar_template  = template.render(diccionario)
+   return HttpResponse(renderizar_template)
+    
 # Las vistas deben tener siempre nombres diferentes.

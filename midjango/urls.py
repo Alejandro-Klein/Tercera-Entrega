@@ -26,5 +26,6 @@ urlpatterns = [
     path("usuario/", views.usuario),
     path("fecha-actual/", views.fecha_actual),
     path("saludar/", views.saludar ), # Sin pasar info.
-    path("bienvenida/<str:nombre>", views.bienvenida ) # Pasando info.
+    path("bienvenida/<str:nombre>", views.bienvenida ), # Pasando info.
+    path("crear-alumno/<str:nombre>/<str:curso>", views.crear_alumno )
 ]
