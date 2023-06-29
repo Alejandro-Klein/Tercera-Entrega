@@ -54,7 +54,7 @@ ROOT_URLCONF = 'midjango.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / "templates"], # co esto ya le digo donde esta el proyecto.
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,23 +1,46 @@
 from django.http import HttpResponse
 from datetime import datetime
-from django.template import Template, Context
+from django.template import Template, Context, loader
 
 # V1
 # def inicio(request):
 #    return HttpResponse("Hola soy INICIO") # pongo lo que quiero que muestre la view
 
-def inicio(request):
+#v2
+# def inicio(request):
     
-   archivo = open(r"C:\Users\Ale\Desktop\CODERHOUSE\mi-django\templates\inicio.html", "r")
+#    archivo = open(r"C:\Users\Ale\Desktop\CODERHOUSE\mi-django\templates\inicio.html", "r") 
   
-   template = Template(archivo.read())
+#    template = Template(archivo.read()) #Template de solo texto.
    
-   archivo.close()
+#    archivo.close()
    
-   contexto = Context()
+#    segundos = datetime.now().second
    
-   renderizar_template = template.render(contexto)
-    
+#    diccionario = {
+#        "mensaje": "Este es el msj de Inicio...", # Esto se lo debo pasar al inicio.html
+#        "segundos": segundos,
+#        "segundos_par": segundos%2 ==0,
+#        "listado_de_numeros": list(range(25))
+#    }
+   
+#    contexto = Context(diccionario) # es la info que quiero que reciba el template.
+#    renderizar_template = template.render(contexto) # esto es para q lo lea el httpresponse
+#    return HttpResponse(renderizar_template)
+
+#v1
+def inicio(request):
+   #no me conviene tener esta direccion por el que se baje el mismo capas no la tenga
+   template = loader.get_template("inicio.html") # carga el tamplate
+   segundos = datetime.now().second
+   diccionario = {
+       "mensaje": "Este es el msj de Inicio...", # Esto se lo debo pasar al inicio.html
+       "segundos": segundos,
+       "segundos_par": segundos%2 ==0,
+       "listado_de_numeros": list(range(25))
+   }
+   
+   renderizar_template  = template.render(diccionario)
    return HttpResponse(renderizar_template)
 
 def usuario(request):

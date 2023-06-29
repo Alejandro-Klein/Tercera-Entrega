@@ -7,5 +7,19 @@
 </head>
 <body>
     <h1>Mi primer template</h1>
+    <p> {{mensaje}}</p>
+    {% if segundos %}
+    <p style="color: red;">{{segundos}}</p>
+    {% else %}
+    <p style="color: green;">{{segundos}}</p>
+    {% endif %}
+
+    {% for numero  in  listado_de_numeros%}
+    <p style="color: blue;"> {{numero}}</p>
+    {% endfor %}
+
+
+    
+
 </body>
 </html>
