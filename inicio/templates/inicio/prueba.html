@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>Mi primer template</h1>
-    <p> {{mensaje}}</p>
+{% extends 'base.html' %}
+
+{% block titulo_head %} 
+<title>Prueba</title>
+{% endblock titulo_head %}
+
+{% block header_mensaje %}
+<h1>Mi primer template</h1>
+{% endblock header_mensaje %}
+
+{% block contenido %}
+<p> {{mensaje}}</p>
     {% if segundos %}
     <p style="color: red;">{{segundos}}</p>
     {% else %}
@@ -17,9 +20,4 @@
     {% for numero  in  listado_de_numeros%}
     <p style="color: blue;"> {{numero}}</p>
     {% endfor %}
-
-
-    
-
-</body>
-</html>
+{% endblock contenido %}

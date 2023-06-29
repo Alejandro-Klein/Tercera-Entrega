@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.template import Template, Context, loader
 from inicio.models import Alumno
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+from inicio.form import CrearAlumnoFormulario, BuscarAlumnoFormulario
 
 # V1
 # def inicio(request):
@@ -77,13 +78,66 @@ def bienvenida(request,nombre):
 # Las vistas deben tener siempre nombres diferentes.
 
 #v2
-def crear_alumno(request,nombre,curso):
-   alumno = Alumno(nombre=nombre,curso=curso)
-   alumno.save() # para guardar en BD.
-   diccionario = {
-      "alumno": alumno,
-   }
-   return render(request, "inicio/crear_alumno.html" , diccionario) # con esto tengo el inicio cargado
+# def crear_alumno(request,nombre,curso):
+#    alumno = Alumno(nombre=nombre,curso=curso)
+#    alumno.save() # para guardar en BD.
+#    diccionario = {
+#       "alumno": alumno,
+#    }
+#    return render(request, "inicio/crear_alumno.html" , diccionario) # con esto tengo el inicio cargado
+
+# def inicio(request):
+#  return render(request,"inicio/inicio.html")
+
+#v3
+# def crear_alumno(request):
+#    print("=================")
+#    print("=================")
+#    print(request.POST)
+#    print("=================")
+#    print("=================")
+#    print(request.GET)
+#    print("=================")
+#    print("=================")
+   
+#    diccionario = {}
+   
+#    if request.method == 'POST':
+#     alumno = Alumno(nombre=request.POST['nombre'],curso=request.POST['materia'])
+#     alumno.save()
+#     diccionario ["alumno"] = alumno
+    
+#    return render(request, "inicio/crear_alumno.html" , diccionario) # con esto tengo el inicio cargado
+
+# def inicio(request):
+#  return render(request,"inicio/inicio.html")
+
+#v4
+def crear_alumno(request):
+   
+   if request.method == 'POST':
+       formulario = CrearAlumnoFormulario(request.POST)
+       if formulario.is_valid():
+           info = formulario.cleaned_data
+           alumno = Alumno(nombre=info['nombre'],curso=info['materia'])
+           alumno.save()
+           return redirect("inicio:lista_alumnos")
+       else:
+           return render(request, "inicio/crear_alumno.html" , {'formulario':formulario})
+    
+   formulario = CrearAlumnoFormulario()
+   return render(request, "inicio/crear_alumno.html" , {'formulario':formulario}) # con esto tengo el inicio cargado
+
+def lista_alumnos(request):   
+    formulario = BuscarAlumnoFormulario(request.GET)
+    if formulario.is_valid():
+     nombre_buscar = formulario.cleaned_data["nombre"]
+     listado_de_alumnos = Alumno.objects.filter(nombre__icontains=nombre_buscar)
+    
+    
+    formulario = BuscarAlumnoFormulario()
+    return render(request, "inicio/lista_alumnos.html", {'formulario':formulario, "alumnos":listado_de_alumnos})
 
 def inicio(request):
  return render(request,"inicio/inicio.html")
+

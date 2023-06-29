@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block titulo_head %} 
+<title>Alumnos</title>
+{% endblock titulo_head %}
+
+{% block header_mensaje  %}
+{% comment %} Se creo el alumno con nombre {{alumno.nombre}} y cursa la materia {{alumno.curso}} {% endcomment %}
+Listado de Alumnos
+{% endblock header_mensaje %}
+
+{% block contenido %}
+<button>
+ <a class="navbar-brand" href={% url 'inicio:crear_alumno' %}>Crear Alumno</a>
+</button>
+<form action="" method="GET">
+    {{formulario}}
+    <button>Buscar</button>
+</form>
+
+{% for alumno in alumnos  %}
+<li>Nombre:{{alumno.nombre}} - Materia:{{alumno.curso}}</li>
+{% endfor %}
+
+{% endblock contenido %}
