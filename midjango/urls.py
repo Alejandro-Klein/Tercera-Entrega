@@ -15,17 +15,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
-from midjango import views # v1 me traigo todo de views
+from django.urls import path , include #por lo que esta en settings
+ # v1 me traigo todo de views
 #v2 from midjango.views import inicio,usuario,fecha_actual # traigo lo que necesito de la view, esto es un paquete q tiene l oque quiero.
 #v3 from midjango.views import usuario
 
 urlpatterns = [
+    path("",include("inicio.urls")),
     path('admin/', admin.site.urls),
-    path("", views.inicio), # al ser una lista debo usar siempre las comas para agregar path.
-    path("usuario/", views.usuario),
-    path("fecha-actual/", views.fecha_actual),
-    path("saludar/", views.saludar ), # Sin pasar info.
-    path("bienvenida/<str:nombre>", views.bienvenida ), # Pasando info.
-    path("crear-alumno/<str:nombre>/<str:curso>", views.crear_alumno )
 ]
